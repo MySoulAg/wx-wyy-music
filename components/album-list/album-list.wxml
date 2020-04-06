@@ -1,0 +1,13 @@
+<!-- 歌单列表组件 -->
+<view class="container">
+    <block wx:for="{{albumList}}" wx:key="id">
+        <view class="item-box">
+            <view class="item" data-id="{{item.id}}" bind:tap="goAlbumDetail">
+                <view class="image-loader">
+                    <image-loader class="image-loader" src="{{item.picUrl || item.coverImgUrl}}"></image-loader>
+                </view>
+                <text>{{item.name}}</text>
+            </view>
+        </view>
+    </block>
+</view>

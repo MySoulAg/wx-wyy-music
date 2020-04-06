@@ -1,0 +1,30 @@
+/* pages/user/user.wxss */
+.navbar {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+.wraper {
+  padding: 30rpx;
+}
+.playing-circle {
+  position: fixed;
+  right: 40rpx;
+}
+.bgc {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: -99;
+}
+.bgc image {
+  position: relative;
+  left: -7%;
+  top: -5%;
+  width: 115%;
+  height: 115%;
+  filter: blur(40rpx);
+}

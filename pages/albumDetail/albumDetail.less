@@ -1,0 +1,172 @@
+@import '../../assets/icon/iconfont.wxss';
+
+
+.navbar {
+    position: fixed;
+    width: 100%;
+}
+
+
+.wraper {
+
+    .bgc {
+        width: 100vw;
+        height: 400rpx;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: -99;
+
+        image {
+            position: relative;
+            left: -7%;
+            top: -5%;
+            width: 115%;
+            height: 115%;
+            filter: blur(30rpx);
+        }
+    }
+
+    .albumInfo {
+        padding-left: 30rpx;
+        padding-right: 30rpx;
+        padding-bottom: 100rpx;
+        display: flex;
+        background-color: rgba(0, 0, 0, 0.3);
+
+        .image-loader {
+            width: 230rpx;
+            height: 230rpx;
+        }
+
+        .left {
+            flex: 1;
+            margin-left: 20rpx;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .title {
+                font-size: 32rpx;
+                font-weight: bold;
+                color: #fff;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+            }
+
+            .mid {
+                display: flex;
+                align-items: center;
+
+                .image-loader {
+                    width: 60rpx;
+                    height: 60rpx;
+                    border-radius: 50%;
+                    overflow: hidden;
+                }
+
+                .name {
+                    flex: 1;
+                    font-size: 24rpx;
+                    color: #eee;
+                    margin-left: 10rpx;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                }
+            }
+
+            .describe {
+                font-size: 24rpx;
+                color: #eee;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+
+            }
+        }
+    }
+
+    .songList {
+        border-radius: 30rpx 30rpx 0 0;
+        position: relative;
+        top: -60rpx;
+        background-color: #fff;
+
+        .title {
+            display: flex;
+            align-items: center;
+            padding: 20rpx 0;
+
+            .icon-zanting {
+                width: 80rpx;
+                font-size: 44rpx;
+                font-weight: bold;
+                text-align: center;
+            }
+
+            .text {
+                font-size: 36rpx;
+                font-weight: bold;
+            }
+
+            .allNum {
+                font-size: 26rpx;
+                color: #999;
+            }
+        }
+
+        .list {
+
+            .item {
+                display: flex;
+                align-items: center;
+                padding: 15rpx 30rpx 15rpx 0;
+
+                .num {
+                    width: 80rpx;
+                    text-align: center;
+                    font-size: 32rpx;
+                    color: #999;
+                    flex-shrink: 0;
+                }
+
+                .left {
+                    width: calc(100% - 80rpx);
+                    display: flex;
+                    flex-direction: column;
+
+                    .name {
+                        font-size: 36rpx;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+
+                        text {
+                            color: #999;
+                        }
+                    }
+
+                    .author {
+                        font-size: 26rpx;
+                        color: #999;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+.playing-circle {
+    position: fixed;
+    right: 40rpx;
+}

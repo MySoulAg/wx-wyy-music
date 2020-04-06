@@ -1,0 +1,3 @@
+<view class="wraper" catch:tap="goPlaying">
+    <image-loader class="image-loader" src="{{src}}"></image-loader>
+</view>

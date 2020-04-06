@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "navbar": "/components/navBar/navbar/index",
+    "play-list-popup":"/components/play-list-popup/play-list-popup"
+  }
+}

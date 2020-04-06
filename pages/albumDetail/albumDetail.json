@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "image-loader": "../../components/image-loader/image-loader",
+    "playing-circle": "../../components/playing-circle/playing-circle",
+    "navbar": "/components/navBar/navbar/index"
+  }
+}

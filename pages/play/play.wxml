@@ -1,0 +1,44 @@
+<view class='view-page'>
+    <navbar class="navbar" bg-color="transparent" page-name=""></navbar>
+    <view class='page-content'>
+        <view class="wraper">
+            <view class="bgc">
+                <image src="{{songDetail.picUrl}}" mode="aspectFill"></image>
+            </view>
+            <!-- <view class="paly-bg" style="{{songDetail.picUrl?'background-image:url('+songDetail.picUrl+')':''}}"></view> -->
+            <view class="containt">
+                <view class="header" style="padding-top:{{navTop}}px">
+                    <view class="h3" style="width:{{titleWidth}}px">{{songDetail.musicName}}</view>
+                    <view class="p">{{songDetail.authorName}}</view>
+                </view>
+                <view class="main">
+                    <view class="lyric-box">
+                        <view wx:if="{{!nolyric}}" class="lyric" style="transform: translateY(-{{scrollHeight}}px);">
+                            <view id="lyric-item" class="lyric-item {{index==currentIndex?'active':''}}" wx:for="{{lyricArr}}" wx:key="time">
+                                {{item.text}}
+                            </view>
+                        </view>
+                        <view wx:else class="noLyric">无歌词</view>
+                    </view>
+                </view>
+                <view class="footer">
+                    <view class="progress">
+                        <wxs module="filter" src="../../utils/filter.wxs"></wxs>
+                        <view class="currentTime">{{filter.format(currentTime)}}</view>
+                        <slider class="slider" max="500" value="{{sliderValue}}" backgroundColor="#D9D9D9" activeColor="#F5F5F5" block-size="12" block-color="#ffffff" bindchanging="bindchanging" bindchange="bindchange"></slider>
+                        <view class="totalTime">{{filter.format(songDetail.totleTime)}}</view>
+                    </view>
+                    <view class="icon">
+                        <wxs module="playType" src="./play.wxs"></wxs>
+                        <view bind:tap="playType" class="iconfont {{playType.playType(playingType)}}"></view>
+                        <view bind:tap="playPrev" class="iconfont icon-shangyiqu"></view>
+                        <view bind:tap="playOrPause" class="iconfont {{playingState?'icon-bofang':'icon-zanting'}}"></view>
+                        <view bind:tap="playNext" class="iconfont icon-shangyiqu1"></view>
+                        <view bind:tap="showPopup" class="iconfont icon-liebiao"></view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <play-list-popup bind:handlePopup="handlePopup" bind:playingById="playingById" isShow="{{isShow}}"></play-list-popup>
+    </view>
+</view>

@@ -1,0 +1,51 @@
+<view class='view-page'>
+    <navbar class="navbar" bg-color="transparent" titleColor="#fff" page-name="歌单详情"></navbar>
+    <view class='page-content'>
+        <view class="wraper">
+            <view class="bgc">
+                <image src="{{coverImgUrl}}" mode="aspectFill"></image>
+            </view>
+            <view class="albumInfo" style="padding-top:{{navHeight+13}}px">
+                <view class="image-loader">
+                    <image-loader src="{{coverImgUrl}}"></image-loader>
+                </view>
+                <view class="left">
+                    <text class="title">{{name}}</text>
+                    <view class="mid">
+                        <view class="image-loader">
+                            <image-loader src="{{avatarUrl}}"></image-loader>
+                        </view>
+                        <text class="name">{{nickname}}</text>
+                    </view>
+                    <text class="describe">{{description || ''}}</text>
+                </view>
+            </view>
+            <view class="songList">
+                <view class="title">
+                    <text class="iconfont icon-zanting"></text>
+                    <text class="text">全部播放</text>
+                    <text class="allNum">(共{{songList.length}}首)</text>
+                </view>
+                <view class="list">
+                    <block wx:for="{{songList}}" wx:key="id">
+                        <view class="item" bind:tap="goPlay" data-index="{{index}}" data-songId="{{item.id}}">
+                            <view class="num">{{index+1}}</view>
+                            <view class="left">
+                                <view class="name">
+                                    {{item.name}}
+                                    <text wx:if="{{item.alia[0]}}">({{item.alia[0]}})</text>
+                                </view>
+                                <text class="author">{{item.ar[0].name}}-{{item.al.name}}</text>
+                            </view>
+                        </view>
+                    </block>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+<view class="playing-circle" style="bottom:{{tabBarHeight*4}}px">
+    <block wx:if="{{picUrl}}">
+        <playing-circle src="{{picUrl}}"></playing-circle>
+    </block>
+</view>

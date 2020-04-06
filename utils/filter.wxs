@@ -1,0 +1,15 @@
+// 补0函数
+var addZero = function(s)  {
+    return s < 10 ? '0' + s : s
+}
+
+// 时间格式化
+var format = function(value) {
+    var minute = Math.floor(value / 60)
+    var second = Math.floor(value % 60)
+    return addZero(minute)+':'+addZero(second)
+}
+
+module.exports = {
+    format:format
+}

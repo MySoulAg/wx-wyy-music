@@ -1,0 +1,45 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    
+    .item-box {
+        width: 33%;
+        display: flex;
+        flex-direction: column;
+
+        .item {
+            width: 206rpx;
+            height: 302rpx;
+
+            .image-loader {
+                width: 206rpx;
+                height: 206rpx;
+            }
+
+            text {
+                width: 100%;
+                font-size: 24rpx;
+                text-align: justify;
+                line-height: 30rpx;
+                margin: 10rpx 0 30rpx;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                color: #fff;
+            }
+        }
+    }
+
+    .item-box:nth-of-type(3n+1) {
+        align-items: flex-start;
+    }
+
+    .item-box:nth-of-type(3n+2) {           
+        align-items: center;
+    }
+
+    .item-box:nth-of-type(3n) {
+        align-items: flex-end;
+    }
+}

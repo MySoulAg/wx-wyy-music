@@ -1,0 +1,202 @@
+@font-face {
+  font-family: "iconfont";
+  src: url('iconfont.eot?t=1584067223326');
+  /* IE9 */
+  src: url('iconfont.eot?t=1584067223326#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('data:application/x-font-woff2;charset=utf-8;base64,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') format('woff2'), url('iconfont.woff?t=1584067223326') format('woff'), url('iconfont.ttf?t=1584067223326') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */ url('iconfont.svg?t=1584067223326#iconfont') format('svg');
+  /* iOS 4.1- */
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-hot:before {
+  content: "\e715";
+}
+.icon-xiangshangjiantou:before {
+  content: "\e643";
+}
+.icon-NEW-:before {
+  content: "\e60d";
+}
+.icon-weibiaoti-:before {
+  content: "\e602";
+}
+.icon-wangyiyunyinle:before {
+  content: "\e60f";
+}
+.icon-yinyue:before {
+  content: "\e601";
+}
+.icon-paihang:before {
+  content: "\e620";
+}
+.icon-wode:before {
+  content: "\e64c";
+}
+.icon-logo-dark:before {
+  content: "\e622";
+}
+.icon-shangyiqu:before {
+  content: "\e663";
+}
+.icon-bofang:before {
+  content: "\e664";
+}
+.icon-zanting:before {
+  content: "\e665";
+}
+.icon-danquxunhuan:before {
+  content: "\e667";
+}
+.icon-liebiao:before {
+  content: "\e60c";
+}
+.icon-suijibofang-wangyiicon:before {
+  content: "\e619";
+}
+.icon-xunhuan-wangyiicon:before {
+  content: "\e60b";
+}
+.icon-shangyiqu1:before {
+  content: "\e600";
+}
+.navbar {
+  position: fixed;
+  width: 100%;
+}
+.wraper .bgc {
+  width: 100vw;
+  height: 400rpx;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: -99;
+}
+.wraper .bgc image {
+  position: relative;
+  left: -7%;
+  top: -5%;
+  width: 115%;
+  height: 115%;
+  filter: blur(30rpx);
+}
+.wraper .albumInfo {
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  padding-bottom: 100rpx;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.wraper .albumInfo .image-loader {
+  width: 230rpx;
+  height: 230rpx;
+}
+.wraper .albumInfo .left {
+  flex: 1;
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.wraper .albumInfo .left .title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #fff;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.wraper .albumInfo .left .mid {
+  display: flex;
+  align-items: center;
+}
+.wraper .albumInfo .left .mid .image-loader {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.wraper .albumInfo .left .mid .name {
+  flex: 1;
+  font-size: 24rpx;
+  color: #eee;
+  margin-left: 10rpx;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+.wraper .albumInfo .left .describe {
+  font-size: 24rpx;
+  color: #eee;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.wraper .songList {
+  border-radius: 30rpx 30rpx 0 0;
+  position: relative;
+  top: -60rpx;
+  background-color: #fff;
+}
+.wraper .songList .title {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+}
+.wraper .songList .title .icon-zanting {
+  width: 80rpx;
+  font-size: 44rpx;
+  font-weight: bold;
+  text-align: center;
+}
+.wraper .songList .title .text {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+.wraper .songList .title .allNum {
+  font-size: 26rpx;
+  color: #999;
+}
+.wraper .songList .list .item {
+  display: flex;
+  align-items: center;
+  padding: 15rpx 30rpx 15rpx 0;
+}
+.wraper .songList .list .item .num {
+  width: 80rpx;
+  text-align: center;
+  font-size: 32rpx;
+  color: #999;
+  flex-shrink: 0;
+}
+.wraper .songList .list .item .left {
+  width: calc(100% - 80rpx);
+  display: flex;
+  flex-direction: column;
+}
+.wraper .songList .list .item .left .name {
+  font-size: 36rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wraper .songList .list .item .left .name text {
+  color: #999;
+}
+.wraper .songList .list .item .left .author {
+  font-size: 26rpx;
+  color: #999;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.playing-circle {
+  position: fixed;
+  right: 40rpx;
+}

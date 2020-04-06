@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "album-list": "../../components/album-list/album-list",
+    "playing-circle": "../../components/playing-circle/playing-circle",
+    "navbar": "/components/navBar/navbar/index"
+  }
+}

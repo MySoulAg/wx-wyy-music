@@ -1,0 +1,13 @@
+function playType(type) {
+    if (type === 0) {
+        return "icon-xunhuan-wangyiicon"
+    } else if (type === 1) {
+        return "icon-danquxunhuan"
+    } else {
+        return "icon-suijibofang-wangyiicon"
+    }
+}
+
+module.exports = {
+    playType: playType
+}

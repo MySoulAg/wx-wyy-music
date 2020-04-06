@@ -1,0 +1,81 @@
+<view class="play-list-popup">
+    <van-popup overlay-style="background-color: transparent" bind:click-overlay="closePopup" close-on-click-overlay="{{false}}" show="{{isShow}}" position="bottom" bind:close="closedPopup" custom-style="height: 80%;background-color: transparent">
+        <view class="warp">
+            <swiper class="swiper-containter" indicator-dots="{{false}}" indicator-color="rgba(0,0,0,.3)" current="1" duration="300" circular="{{false}}" vertical="{{false}}" previous-margin="30rpx" next-margin="30rpx" bindchange="" bindanimationfinish="">
+                <swiper-item class="swiper-item" item-id="">
+                    <view class="swiper-item-box">
+                        <view class="h5">
+                            历史播放
+                            <view class="span">(25)</view>
+                        </view>
+                        <view class="ul">
+                            <view class="li">
+                                <view class="left">
+                                    <view class="p">发热狗热狗</view>
+                                    <view class="span">-法国人人</view>
+                                </view>
+                                <view class="icon">
+                                    <icon type="clear" size="16"></icon>
+                                </view>
+                            </view>
+                            <view class="li">
+                                <view class="left">
+                                    <view class="p">发热狗热狗</view>
+                                    <view class="span">-法国人人</view>
+                                </view>
+                                <view class="icon">
+                                    <icon type="clear" size="16"></icon>
+                                </view>
+                            </view>
+                            <view class="li">
+                                <view class="left">
+                                    <view class="p">发热狗热狗</view>
+                                    <view class="span">-法国人人</view>
+                                </view>
+                                <view class="icon">
+                                    <icon type="clear" size="16"></icon>
+                                </view>
+                            </view>
+                            <view class="li">
+                                <view class="left">
+                                    <view class="p">发热狗热狗</view>
+                                    <view class="span">-法国人人</view>
+                                </view>
+                                <view class="icon">
+                                    <icon type="clear" size="16"></icon>
+                                </view>
+                            </view>
+                        </view>
+                        <!-- <div v-else class="noData">无历史播放，快去听听吧(つェ⊂)</div> -->
+                        <view class="button" bind:tap="closePopup">关闭</view>
+                    </view>
+                </swiper-item>
+                <swiper-item class="swiper-item" item-id="">
+                    <view class="swiper-item-box">
+                        <view class="h5">
+                            播放当前
+                            <view class="span">({{currentSongList.length}})</view>
+                        </view>
+                        <view class="ul" wx:if="{{currentSongList.length>0}}">
+                            <view class="li" data-songId="{{item.id}}" bind:tap="playingById" wx:for="{{currentSongList}}" wx:key="id">
+                                <view class="left">
+                                    <view class="p">{{item.name}}</view>
+                                    <view class="span">
+                                        -{{item.ar?item.ar[0].name:item.artists[0].name}}
+                                    </view>
+                                </view>
+                                <view class="icon" data-index="{{index}}" catch:tap="delete">
+                                    <icon type="clear" size="16" color="#eee"></icon>
+                                </view>
+                            </view>
+                        </view>
+                        <view wx:else class="noData">无历史播放，快去听听吧(つェ⊂)</view>
+                        <view class="button" bind:tap="closePopup">关闭</view>
+                    </view>
+                </swiper-item>
+            </swiper>
+          
+        
+        </view>
+    </van-popup>
+</view>

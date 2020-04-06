@@ -1,0 +1,4 @@
+
+<image class="finish {{!isLoading?'finished':''}}" src="{{src}}" mode="aspectFit" lazy-load="{{true}}" bindload="bindload"></image>
+<image wx:if="{{isLoading}}" class="loader" src="../../assets/imgs/default.png" mode="aspectFit"></image>
+
