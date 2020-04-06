@@ -16,6 +16,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isLoading: true, //背景图的占位图
     isShow: false, //是否显示列表弹出层
     playingType: 0, //播放模式
     navTop: 0,
@@ -134,6 +135,13 @@ Page({
     audioCxt.onSeeked(() => {
       console.log("跳转结束end")
 
+    })
+  },
+
+  /**背景图片加载完成时触发 */
+  bindload() {
+    this.setData({
+      isLoading: false
     })
   },
 
@@ -404,7 +412,8 @@ Page({
       sliderValue: 0,
       currentIndex: -1,
       scrollHeight: 0,
-      lyricArr: []
+      lyricArr: [],
+      isLoading: true
     })
     App.globalData.lyricArr = []
     audioCxt.startTime = 0

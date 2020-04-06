@@ -3,7 +3,9 @@
     <view class='page-content'>
         <view class="wraper">
             <view class="bgc">
-                <image src="{{songDetail.picUrl}}" mode="aspectFill"></image>
+                <!-- <image src="{{songDetail.picUrl}}" mode="aspectFill"></image> -->
+                <image class="finish {{!isLoading?'finished':''}}" src="{{songDetail.picUrl}}" mode="aspectFill" lazy-load="{{true}}" bindload="bindload"></image>
+                <image wx:if="{{isLoading}}" class="loader" src="../../assets/imgs/default.png" mode="aspectFill"></image>
             </view>
             <!-- <view class="paly-bg" style="{{songDetail.picUrl?'background-image:url('+songDetail.picUrl+')':''}}"></view> -->
             <view class="containt">

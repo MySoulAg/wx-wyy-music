@@ -46,7 +46,7 @@
         left: 0;
         top: 0;
         z-index: -99;
-    
+
         image {
             position: relative;
             left: -7%;
@@ -54,6 +54,21 @@
             width: 115%;
             height: 115%;
             filter: blur(40rpx);
+        }
+
+        .finish {
+            width: 0;
+            height: 0;
+            opacity: 0;
+        }
+
+        .finish.finished {
+            position: relative;
+            left: -7%;
+            top: -5%;
+            width: 115%;
+            height: 115%;
+            opacity: 1;
         }
     }
 
