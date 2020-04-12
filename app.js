@@ -1,7 +1,7 @@
 //app.js
 App({
   onLaunch: function () {
-    var audioCxt = wx.createInnerAudioContext()
+    var audioCxt = wx.getBackgroundAudioManager()
     this.globalData.audioCxt = audioCxt
 
     let menuButtonObject = wx.getMenuButtonBoundingClientRect();

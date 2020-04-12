@@ -21,7 +21,7 @@ Page({
     playingType: 0, //播放模式
     navTop: 0,
     titleWidth: 0,
-    playingState: true, //播放状态
+    playingState: false, //播放状态
     currentTime: 0, //当前播放时间
     sliderValue: 0, //进度条的值
     songDetail: {
@@ -37,36 +37,12 @@ Page({
     scrollHeight: 0 //歌词滚动的高度
   },
 
-  /**取消监听 */
-  listenOff() {
-    //取消监听是否可以播放
-    audioCxt.offCanplay()
-    //取消监听播放
-    audioCxt.offPlay()
-    //取消监听停止事件
-    audioCxt.offStop()
-    //取消监听音频自然播放至结束
-    audioCxt.offEnded()
-    //取消监听暂停
-    audioCxt.offPause()
-    //取消监听播放进度更新事件
-    audioCxt.offTimeUpdate()
-    //取消监听播放错误事件
-    audioCxt.offError()
-    //取消当音频因为数据不足，需要停下来加载
-    audioCxt.offWaiting()
-    //取消监听音频进行跳转操作
-    audioCxt.offSeeking()
-    //取消监听音频完成跳转操作
-    audioCxt.offSeeked()
-  },
-
   /**初始化监听 */
   listenInit() {
+
     //监听是否可以播放
     audioCxt.onCanplay(() => {
-      console.log("可以播放了0")
-      console.log(audioCxt.duration)
+      console.log("可以播放了")
       if (this.data.playingState) {
         audioCxt.play()
       }
@@ -75,7 +51,6 @@ Page({
     //监听播放
     audioCxt.onPlay(() => {
       console.log("开始播放了start")
-      console.log(audioCxt.duration)
       this.setData({
         playingState: true
       })
@@ -112,12 +87,21 @@ Page({
       console.log("播放进度正在更新" + parseInt(audioCxt.currentTime))
       this.lyricScroll(audioCxt.currentTime);
       if (this.data.currentTime + 1 == parseInt(audioCxt.currentTime)) {
-        console.log()
         this.setData({
           currentTime: this.data.currentTime + 1,
           sliderValue: this.data.sliderValue + 500 / this.data.songDetail.totleTime
         })
       }
+    })
+    //监听用户在系统音乐播放面板点击下一曲事件（仅iOS）
+    audioCxt.onNext(() => {
+      console.log("系统音乐播放面板点击下一曲事件")
+      this.playNext()
+    })
+    //监听用户在系统音乐播放面板点击上一曲事件（仅iOS）
+    audioCxt.onPrev(() => {
+      console.log("系统音乐播放面板点击上一曲事件")
+      this.playPrev()
     })
     //监听播放错误事件
     audioCxt.onError(() => {
@@ -186,8 +170,6 @@ Page({
         })
       }
     }
-
-
   },
 
   /**点击列表图标 */
@@ -233,13 +215,11 @@ Page({
   /**点击下一曲 */
   playNext() {
     App.globalData.playingType === 2 ? this.randomSong() : this.orderNextSong()
-
   },
 
   /**点击上一曲 */
   playPrev() {
     App.globalData.playingType === 2 ? this.randomSong() : this.orderPrevSong()
-
   },
 
   /**随机播放下一曲 或 上一曲 */
@@ -306,35 +286,33 @@ Page({
 
   /**获取歌曲的url */
   getSongUrl(songId) {
-    return new Promise((resolve, reject) => {
-      request.getSongUrl(songId).then(res => {
-        if (res.data[0].url) {
-          const {
-            url
-          } = res.data[0]
-          audioCxt.src = url
-          this.setData({
-            playingState: true
-          })
-        } else {
-          wx.showToast({
-            title: '该歌曲不可播放，已切换下一曲',
-            icon: 'none',
-            duration: 2000
-          })
-          if (this.data.playingType == 0 || this.data.playingType == 1) {
-            //顺序的下一曲
-            this.orderNextSong();
-          }
-          if (this.data.playingType == 2) {
-            //随机的下一曲
-            this.randomSong();
-          }
+    request.getSongUrl(songId).then(res => {
+      if (res.data[0].url) {
+        const {
+          url
+        } = res.data[0]
+        audioCxt.src = url
+        this.setData({
+          playingState: true
+        })
+      } else {
+        wx.showToast({
+          title: '该歌曲不可播放，已切换下一曲',
+          icon: 'none',
+          duration: 2000
+        })
+        if (this.data.playingType == 0 || this.data.playingType == 1) {
+          //顺序的下一曲
+          this.orderNextSong();
         }
+        if (this.data.playingType == 2) {
+          //随机的下一曲
+          this.randomSong();
+        }
+      }
 
-        resolve()
-      })
     })
+
 
   },
 
@@ -342,6 +320,9 @@ Page({
   getSongDetail(songId) {
     request.getSongDetail(songId).then(res => {
       console.log(res);
+      audioCxt.title = res.songs[0].name
+      audioCxt.singer = res.songs[0].ar[0].name
+      audioCxt.coverImgUrl = res.songs[0].al.picUrl
       this.setData({
         "songDetail.authorName": res.songs[0].ar[0].name,
         "songDetail.musicName": res.songs[0].name,
@@ -419,9 +400,7 @@ Page({
     audioCxt.startTime = 0
     this.getSongDetail(songId);
     this.getLyric(songId);
-    this.getSongUrl(songId).then(() => {
-      console.log("获取到了url")
-    });
+    this.getSongUrl(songId);
   },
 
   /**
@@ -501,6 +480,7 @@ Page({
    */
   onHide: function () {
     console.log("onHide")
+    App.globalData.isChangeSongId = false
   },
 
   /**
@@ -510,7 +490,6 @@ Page({
     console.log("onUnload")
     App.globalData.isChangeSongId = false
     App.globalData.playingState = this.data.playingState
-    this.listenOff()
   },
 
   /**
