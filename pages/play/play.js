@@ -78,7 +78,7 @@ Page({
         scrollHeight: 0,
       })
       App.globalData.playingState = false
-      audioCxt.startTime = 0
+      // audioCxt.startTime = 0
       this.playNext();
     })
     //监听暂停
@@ -117,6 +117,9 @@ Page({
     //当音频因为数据不足，需要停下来加载
     audioCxt.onWaiting(() => {
       console.log("音频加载中。。。")
+      wx.showLoading({
+        title: '缓冲中',
+      })
     })
     //监听音频进行跳转操作
     audioCxt.onSeeking(() => {
@@ -308,6 +311,9 @@ Page({
             url
           } = res.data[0]
           audioCxt.src = url
+          audioCxt.title = this.data.songDetail.musicName
+          audioCxt.singer = this.data.songDetail.authorName
+          audioCxt.coverImgUrl = this.data.songDetail.picUrl
           this.setData({
             playingState: true
           })
@@ -340,9 +346,6 @@ Page({
       request.getSongDetail(songId).then(res => {
         resolve()
         console.log(res);
-        audioCxt.title = res.songs[0].name
-        audioCxt.singer = res.songs[0].ar[0].name
-        audioCxt.coverImgUrl = res.songs[0].al.picUrl
         this.setData({
           "songDetail.authorName": res.songs[0].ar[0].name,
           "songDetail.musicName": res.songs[0].name,
@@ -410,13 +413,13 @@ Page({
   },
 
   /**初始化播放 */
-  playInit(songId) {
+  async playInit(songId) {
     wx.showLoading({
       title: '加载中',
     })
     audioCxt.stop();
     this.setData({
-      playingState: true,
+      playingState: false,
       currentTime: 0,
       sliderValue: 0,
       currentIndex: -1,
@@ -425,15 +428,14 @@ Page({
       isLoading: true,
       animation:!this.data.animation
     })
-    App.globalData.playingState = true
+    App.globalData.playingState = false
     App.globalData.lyricArr = []
-    audioCxt.startTime = 0
-    let r1 = this.getSongDetail(songId);
+    // audioCxt.startTime = 0
+    let r1 = await this.getSongDetail(songId);
     let r2 = this.getLyric(songId);
     let r3 = this.getSongUrl(songId);
     Promise.all([r1,r2,r3]).then(res=>{
       wx.hideLoading()
-      console.log(res,)
     })
   },
 
