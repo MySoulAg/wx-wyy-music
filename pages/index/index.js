@@ -23,7 +23,11 @@ Page({
 
   /**获取推荐歌单 */
   getRecommendedList() {
+    wx.showLoading({
+      title: '加载中',
+    })
     request.getRecommendedList().then(res => {
+      wx.hideLoading()
       console.log(res);
       if (res && res.code == 200) {
         this.setData({

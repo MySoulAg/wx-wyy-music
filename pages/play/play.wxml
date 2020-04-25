@@ -13,14 +13,21 @@
                     <view class="h3" style="width:{{titleWidth}}px">{{songDetail.musicName}}</view>
                     <view class="p">{{songDetail.authorName}}</view>
                 </view>
-                <view class="main">
-                    <view class="lyric-box">
+                <view class="main" catch:tap="target">
+                    <view style="opacity:{{!isShowLyric?'0':'1'}}" class="lyric-box">
                         <view wx:if="{{!nolyric}}" class="lyric" style="transform: translateY(-{{scrollHeight}}px);">
                             <view id="lyric-item" class="lyric-item {{index==currentIndex?'active':''}}" wx:for="{{lyricArr}}" wx:key="time">
                                 {{item.text}}
                             </view>
                         </view>
                         <view wx:else class="noLyric">无歌词</view>
+                    </view>
+                    <view class="cover">
+                        <view class="{{animation?'animation1':'animation2'}}" style="opacity:{{isShowLyric?'0':'1'}};animation-play-state:{{playingState?'running':'paused'}};">
+                            <!-- <image-loader class="image-loader" src="{{songDetail.picUrl}}"></image-loader> -->
+                            <image class="finish {{!isLoading?'finished':''}}" src="{{songDetail.picUrl}}" mode="aspectFill" lazy-load="{{true}}" bindload="bindload"></image>
+                            <image wx:if="{{isLoading}}" class="loader" src="../../assets/imgs/default.png" mode="aspectFill"></image>
+                        </view>
                     </view>
                 </view>
                 <view class="footer">

@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "navbar": "/components/navBar/navbar/index",
-    "play-list-popup":"/components/play-list-popup/play-list-popup"
+    "play-list-popup":"/components/play-list-popup/play-list-popup",
+    "image-loader": "../../components/image-loader/image-loader"
   }
 }

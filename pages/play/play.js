@@ -16,6 +16,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    animation:true,//用于切换歌曲后，封面的重新开始动画
+    isShowLyric:false,//是否显示歌词
     isLoading: true, //背景图的占位图
     isShow: false, //是否显示列表弹出层
     playingType: 0, //播放模式
@@ -42,6 +44,7 @@ Page({
 
     //监听是否可以播放
     audioCxt.onCanplay(() => {
+      wx.hideLoading()
       console.log("可以播放了")
       if (this.data.playingState) {
         audioCxt.play()
@@ -54,6 +57,7 @@ Page({
       this.setData({
         playingState: true
       })
+      App.globalData.playingState = true
     })
     //监听停止事件
     audioCxt.onStop(() => {
@@ -61,6 +65,7 @@ Page({
       this.setData({
         playingState: false
       })
+      App.globalData.playingState = false
     })
     //监听音频自然播放至结束
     audioCxt.onEnded(() => {
@@ -72,6 +77,7 @@ Page({
         currentIndex: -1,
         scrollHeight: 0,
       })
+      App.globalData.playingState = false
       audioCxt.startTime = 0
       this.playNext();
     })
@@ -81,6 +87,7 @@ Page({
       this.setData({
         playingState: false
       })
+      App.globalData.playingState = false
     })
     //监听播放进度更新事件
     audioCxt.onTimeUpdate(() => {
@@ -119,6 +126,13 @@ Page({
     audioCxt.onSeeked(() => {
       console.log("跳转结束end")
 
+    })
+  },
+
+  /**显示封面 或 歌词 */
+  target(){
+    this.setData({
+      isShowLyric:!this.data.isShowLyric
     })
   },
 
@@ -286,31 +300,35 @@ Page({
 
   /**获取歌曲的url */
   getSongUrl(songId) {
-    request.getSongUrl(songId).then(res => {
-      if (res.data[0].url) {
-        const {
-          url
-        } = res.data[0]
-        audioCxt.src = url
-        this.setData({
-          playingState: true
-        })
-      } else {
-        wx.showToast({
-          title: '该歌曲不可播放，已切换下一曲',
-          icon: 'none',
-          duration: 2000
-        })
-        if (this.data.playingType == 0 || this.data.playingType == 1) {
-          //顺序的下一曲
-          this.orderNextSong();
+    return new Promise(resolve=>{
+      request.getSongUrl(songId).then(res => {
+        resolve()
+        if (res.data[0].url) {
+          const {
+            url
+          } = res.data[0]
+          audioCxt.src = url
+          this.setData({
+            playingState: true
+          })
+          App.globalData.playingState = true
+        } else {
+          wx.showToast({
+            title: '该歌曲不可播放，已切换下一曲',
+            icon: 'none',
+            duration: 2000
+          })
+          if (this.data.playingType == 0 || this.data.playingType == 1) {
+            //顺序的下一曲
+            this.orderNextSong();
+          }
+          if (this.data.playingType == 2) {
+            //随机的下一曲
+            this.randomSong();
+          }
         }
-        if (this.data.playingType == 2) {
-          //随机的下一曲
-          this.randomSong();
-        }
-      }
-
+  
+      })
     })
 
 
@@ -318,22 +336,26 @@ Page({
 
   /**获取音乐详情 */
   getSongDetail(songId) {
-    request.getSongDetail(songId).then(res => {
-      console.log(res);
-      audioCxt.title = res.songs[0].name
-      audioCxt.singer = res.songs[0].ar[0].name
-      audioCxt.coverImgUrl = res.songs[0].al.picUrl
-      this.setData({
-        "songDetail.authorName": res.songs[0].ar[0].name,
-        "songDetail.musicName": res.songs[0].name,
-        "songDetail.picUrl": res.songs[0].al.picUrl,
-        "songDetail.totleTime": parseInt(res.songs[0].dt / 1000)
-      })
-      App.globalData.songDetail.authorName = res.songs[0].ar[0].name;
-      App.globalData.songDetail.musicName = res.songs[0].name;
-      App.globalData.songDetail.picUrl = res.songs[0].al.picUrl;
-      App.globalData.songDetail.totleTime = parseInt(res.songs[0].dt / 1000);
-    });
+    return new Promise(resolve=>{
+      request.getSongDetail(songId).then(res => {
+        resolve()
+        console.log(res);
+        audioCxt.title = res.songs[0].name
+        audioCxt.singer = res.songs[0].ar[0].name
+        audioCxt.coverImgUrl = res.songs[0].al.picUrl
+        this.setData({
+          "songDetail.authorName": res.songs[0].ar[0].name,
+          "songDetail.musicName": res.songs[0].name,
+          "songDetail.picUrl": res.songs[0].al.picUrl,
+          "songDetail.totleTime": parseInt(res.songs[0].dt / 1000),
+          isLoading: true
+        })
+        App.globalData.songDetail.authorName = res.songs[0].ar[0].name;
+        App.globalData.songDetail.musicName = res.songs[0].name;
+        App.globalData.songDetail.picUrl = res.songs[0].al.picUrl;
+        App.globalData.songDetail.totleTime = parseInt(res.songs[0].dt / 1000);
+      });
+    }) 
   },
 
   /**歌词滚动 */
@@ -354,38 +376,44 @@ Page({
 
   /**获取歌词 */
   getLyric(songId) {
-    request.getLyric(songId).then(res => {
-      console.log(res);
-      if (res.nolyric) {
-        this.setData({
-          nolyric: true,
-          lyricArr: []
-        })
-        App.globalData.nolyric = true
-        App.globalData.lyricArr = []
-      } else {
-        App.globalData.nolyric = false
-        App.globalData.lyricArr = parseLyric(res.lrc.lyric)
-        this.setData({
-          nolyric: false,
-          lyricArr: parseLyric(res.lrc.lyric)
-        }, () => {
-          const query = wx.createSelectorQuery()
-          query.selectAll('#lyric-item').boundingClientRect()
-          query.exec((res) => {
-            this.setData({
-              lyricBoxArr: res[0]
-            })
-            App.globalData.lyricBoxArr = res[0]
+    return new Promise(resolve=>{
+      request.getLyric(songId).then(res => {
+        resolve()
+        console.log(res);
+        if (res.nolyric || res.needDesc) {
+          this.setData({
+            nolyric: true,
+            lyricArr: []
           })
-        })
-      }
-      console.log(this.data.lyricArr);
-    });
+          App.globalData.nolyric = true
+          App.globalData.lyricArr = []
+        }else {
+          App.globalData.nolyric = false
+          App.globalData.lyricArr = parseLyric(res.lrc.lyric)
+          this.setData({
+            nolyric: false,
+            lyricArr: parseLyric(res.lrc.lyric)
+          }, () => {
+            const query = wx.createSelectorQuery()
+            query.selectAll('#lyric-item').boundingClientRect()
+            query.exec((res) => {
+              this.setData({
+                lyricBoxArr: res[0]
+              })
+              App.globalData.lyricBoxArr = res[0]
+            })
+          })
+        }
+        console.log(this.data.lyricArr);
+      });
+    })
   },
 
   /**初始化播放 */
   playInit(songId) {
+    wx.showLoading({
+      title: '加载中',
+    })
     audioCxt.stop();
     this.setData({
       playingState: true,
@@ -394,13 +422,19 @@ Page({
       currentIndex: -1,
       scrollHeight: 0,
       lyricArr: [],
-      isLoading: true
+      isLoading: true,
+      animation:!this.data.animation
     })
+    App.globalData.playingState = true
     App.globalData.lyricArr = []
     audioCxt.startTime = 0
-    this.getSongDetail(songId);
-    this.getLyric(songId);
-    this.getSongUrl(songId);
+    let r1 = this.getSongDetail(songId);
+    let r2 = this.getLyric(songId);
+    let r3 = this.getSongUrl(songId);
+    Promise.all([r1,r2,r3]).then(res=>{
+      wx.hideLoading()
+      console.log(res,)
+    })
   },
 
   /**

@@ -24,7 +24,11 @@ Page({
 
   /**获取我的歌单 */
   getUserList(id) {
+    wx.showLoading({
+      title: '加载中',
+    })
     request.getUserList(id).then(res => {
+      wx.hideLoading()
       if (res && res.code == 200 && res.playlist.length != 0) {
         this.setData({
           userList: res.playlist,

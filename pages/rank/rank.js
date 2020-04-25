@@ -22,7 +22,11 @@ Page({
 
   /**获取排行歌单 */
   getRankingList() {
+    wx.showLoading({
+      title: '加载中',
+    })
     request.getRankingList().then(res => {
+      wx.hideLoading()
       console.log(res);
       if (res && res.code == 200) {
         this.setData({

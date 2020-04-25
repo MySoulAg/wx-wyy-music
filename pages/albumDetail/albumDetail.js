@@ -31,7 +31,11 @@ Page({
 
   /**获取歌单详情 */
   getAlbumDetail(id) {
+    wx.showLoading({
+      title: '加载中',
+    })
     request.getAlbumDetail(id).then(res => {
+      wx.hideLoading()
       console.log(res);
       this.setData({
         coverImgUrl: res.playlist.coverImgUrl,
