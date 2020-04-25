@@ -117,9 +117,6 @@ Page({
     //当音频因为数据不足，需要停下来加载
     audioCxt.onWaiting(() => {
       console.log("音频加载中。。。")
-      wx.showLoading({
-        title: '缓冲中',
-      })
     })
     //监听音频进行跳转操作
     audioCxt.onSeeking(() => {
@@ -381,7 +378,9 @@ Page({
   getLyric(songId) {
     return new Promise(resolve=>{
       request.getLyric(songId).then(res => {
-        resolve()
+        this.getSongUrl(songId).then(()=>{
+          resolve()
+        });
         console.log(res);
         if (res.nolyric || res.needDesc) {
           this.setData({
@@ -413,7 +412,7 @@ Page({
   },
 
   /**初始化播放 */
-  async playInit(songId) {
+  playInit(songId) {
     wx.showLoading({
       title: '加载中',
     })
@@ -431,12 +430,11 @@ Page({
     App.globalData.playingState = false
     App.globalData.lyricArr = []
     // audioCxt.startTime = 0
-    let r1 = await this.getSongDetail(songId);
+    let r1 = this.getSongDetail(songId);
     let r2 = this.getLyric(songId);
-    let r3 = this.getSongUrl(songId);
-    Promise.all([r1,r2,r3]).then(res=>{
-      wx.hideLoading()
-    })
+    // Promise.all([r1,r2]).then(res=>{
+    //   wx.hideLoading()
+    // })
   },
 
   /**
