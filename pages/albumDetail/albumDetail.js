@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    navHeight:App.globalData.navHeight,
+    navHeight:App.globalData.navHeight * 750 / wx.getSystemInfoSync().windowWidth,
     tabBarHeight:App.globalData.tabBarHeight,
     picUrl:null,
     coverImgUrl: "", //封面、背景

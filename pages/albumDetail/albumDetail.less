@@ -4,6 +4,7 @@
 .navbar {
     position: fixed;
     width: 100%;
+    z-index: 9999;
 }
 
 
@@ -28,6 +29,11 @@
     }
 
     .albumInfo {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        box-sizing: border-box;
         padding-left: 30rpx;
         padding-right: 30rpx;
         padding-bottom: 100rpx;
@@ -93,8 +99,9 @@
 
     .songList {
         border-radius: 30rpx 30rpx 0 0;
-        position: relative;
-        top: -60rpx;
+        position: fixed;
+        left: 0;
+        width: 100%;
         background-color: #fff;
 
         .title {

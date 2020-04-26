@@ -5,7 +5,7 @@
             <view class="bgc">
                 <image src="{{coverImgUrl}}" mode="aspectFill"></image>
             </view>
-            <view class="albumInfo" style="padding-top:{{navHeight+13}}px">
+            <view class="albumInfo" style="padding-top:{{navHeight+26}}rpx">
                 <view class="image-loader">
                     <image-loader src="{{coverImgUrl}}"></image-loader>
                 </view>
@@ -20,13 +20,13 @@
                     <text class="describe">{{description || ''}}</text>
                 </view>
             </view>
-            <view class="songList">
+            <view class="songList" style="top:{{navHeight+286}}rpx">
                 <view class="title">
                     <text class="iconfont icon-zanting"></text>
                     <text class="text">全部播放</text>
                     <text class="allNum">(共{{songList.length}}首)</text>
                 </view>
-                <view class="list">
+                <scroll-view scroll-y="{{true}}" class="list" style="height:calc(100vh - {{navHeight+380}}rpx)">
                     <block wx:for="{{songList}}" wx:key="id">
                         <view class="item" bind:tap="goPlay" data-index="{{index}}" data-songId="{{item.id}}">
                             <view class="num">{{index+1}}</view>
@@ -39,7 +39,7 @@
                             </view>
                         </view>
                     </block>
-                </view>
+                </scroll-view>
             </view>
         </view>
     </view>
