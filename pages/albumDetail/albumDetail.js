@@ -23,8 +23,12 @@ Page({
   goPlay(e) {
     App.globalData.currentSongId = e.currentTarget.dataset.songid
     App.globalData.currentSongList = this.data.songList
-    App.globalData.currentSongIndex = e.currentTarget.dataset.index
-    App.globalData.isChangeSongId = true
+    if (e.currentTarget.dataset.index != App.globalData.currentSongIndex) {
+      App.globalData.currentSongIndex = e.currentTarget.dataset.index
+      App.globalData.isChangeSongId = true
+    } else {
+      App.globalData.isChangeSongId = false
+    }
     wx.navigateTo({
       url: '../play/play'
     })
@@ -69,7 +73,7 @@ Page({
   /**
    * 监听 picUrl 的变化
    */
-  watchBackPicUrl: function (){
+  watchBackPicUrl: function () {
     this.setData({
       picUrl: App.globalData.songDetail.picUrl,
     })
@@ -78,7 +82,7 @@ Page({
   /**
    * 监听 currentSongId 的变化
    */
-  watchBackwatchSongId: function (){
+  watchBackwatchSongId: function () {
     for (let i = 0, len = this.data.songList.length; i < len; i++) {
       if (this.data.songList[i].id == App.globalData.currentSongId) {
         this.setData({
