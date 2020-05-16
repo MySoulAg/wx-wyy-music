@@ -7,19 +7,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-    navHeight:App.globalData.navHeight * 750 / wx.getSystemInfoSync().windowWidth,
-    tabBarHeight:App.globalData.tabBarHeight,
-    picUrl:null,
+    navHeight: App.globalData.navHeight * 750 / wx.getSystemInfoSync().windowWidth,
+    tabBarHeight: App.globalData.tabBarHeight,
+    picUrl: null,
     coverImgUrl: "", //封面、背景
     name: "", //歌单标题
     avatarUrl: "", //头像
     nickname: "", //昵称
     description: "", //描述
-    songList: [] //歌曲信息
+    songList: [], //歌曲信息
+    currentIndex: -1, //当前歌单播放的下标
   },
 
   /**点击歌曲列表 跳 播放 */
-  goPlay(e){
+  goPlay(e) {
     App.globalData.currentSongId = e.currentTarget.dataset.songid
     App.globalData.currentSongList = this.data.songList
     App.globalData.currentSongIndex = e.currentTarget.dataset.index
@@ -45,6 +46,14 @@ Page({
         description: res.playlist.description,
         songList: res.playlist.tracks
       })
+      for (let i = 0, len = res.playlist.tracks.length; i < len; i++) {
+        if (res.playlist.tracks[i].id == App.globalData.currentSongId) {
+          this.setData({
+            currentIndex: i
+          })
+          return
+        }
+      }
     });
   },
 
@@ -52,7 +61,32 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    App.watchSongId(this.watchBackwatchSongId)
+    App.watchPicUrl(this.watchBackPicUrl)
     this.getAlbumDetail(options.id)
+  },
+
+  /**
+   * 监听 picUrl 的变化
+   */
+  watchBackPicUrl: function (){
+    this.setData({
+      picUrl: App.globalData.songDetail.picUrl,
+    })
+  },
+
+  /**
+   * 监听 currentSongId 的变化
+   */
+  watchBackwatchSongId: function (){
+    for (let i = 0, len = this.data.songList.length; i < len; i++) {
+      if (this.data.songList[i].id == App.globalData.currentSongId) {
+        this.setData({
+          currentIndex: i
+        })
+        return
+      }
+    }
   },
 
   /**
@@ -67,8 +101,16 @@ Page({
    */
   onShow: function () {
     this.setData({
-      picUrl:App.globalData.songDetail.picUrl,
+      picUrl: App.globalData.songDetail.picUrl,
     })
+    for (let i = 0, len = this.data.songList.length; i < len; i++) {
+      if (this.data.songList[i].id == App.globalData.currentSongId) {
+        this.setData({
+          currentIndex: i
+        })
+        return
+      }
+    }
   },
 
   /**

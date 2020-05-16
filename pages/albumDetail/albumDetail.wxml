@@ -29,13 +29,21 @@
                 <scroll-view scroll-y="{{true}}" class="list" style="height:calc(100vh - {{navHeight+380}}rpx)">
                     <block wx:for="{{songList}}" wx:key="id">
                         <view class="item" bind:tap="goPlay" data-index="{{index}}" data-songId="{{item.id}}">
-                            <view class="num">{{index+1}}</view>
+                            <!-- <view class="num">{{index+1}}</view> -->
+                            <view class="num">
+                                {{index !=currentIndex?index+1:''}}
+                                <image wx:if="{{index ==currentIndex}}" style="width:30rpx;height:30rpx" src="../../assets/imgs/call3.gif"></image>
+                            </view>
                             <view class="left">
-                                <view class="name">
+                                <view style="{{index ==currentIndex?'color: #e74c3c':'' }}" class="name">
                                     {{item.name}}
-                                    <text wx:if="{{item.alia[0]}}">({{item.alia[0]}})</text>
+                                    <view style="{{index ==currentIndex?'color: #e74c3c':'' }}" class="text" wx:if="{{item.alia[0]}}">
+                                        ({{item.alia[0]}})
+                                    </view>
                                 </view>
-                                <text class="author">{{item.ar[0].name}}-{{item.al.name}}</text>
+                                <view style="{{index ==currentIndex?'color: #e74c3c':'' }}" class="author">
+                                    {{item.ar[0].name}}-{{item.al.name}}
+                                </view>
                             </view>
                         </view>
                     </block>

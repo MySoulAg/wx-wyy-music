@@ -193,8 +193,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.wraper .songList .list .item .left .name text {
+.wraper .songList .list .item .left .name .text {
   color: #999;
+  display: inline-block;
 }
 .wraper .songList .list .item .left .author {
   font-size: 26rpx;

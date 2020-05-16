@@ -29,14 +29,49 @@ App({
     })
 
   },
+  // 这里这么写，是要在其他界面监听，而不是在app.js中监听，而且这个监听方法，需要一个回调方法。
+  watchSongId: function (method) {
+    var obj = this.globalData;
+    Object.defineProperty(obj, "currentSongId", {
+      configurable: true,
+      enumerable: true,
+      set: function (value) {
+        this._currentSongId = value;
+        console.log('是否会被执行2')
+        method(value);
+      },
+      get: function () {
+        // 可以在这里打印一些东西，然后在其他界面调用getApp().globalData.name的时候，这里就会执行。
+        return this._currentSongId
+      }
+    })
+  },
+  // 这里这么写，是要在其他界面监听，而不是在app.js中监听，而且这个监听方法，需要一个回调方法。
+  watchPicUrl: function (method) {
+    var obj = this.globalData.songDetail;
+    Object.defineProperty(obj, "picUrl", {
+      configurable: true,
+      enumerable: true,
+      set: function (value) {
+        this._currentSongId = value;
+        console.log('是否会被执行2')
+        method(value);
+      },
+      get: function () {
+        // 可以在这里打印一些东西，然后在其他界面调用getApp().globalData.name的时候，这里就会执行。
+        return this._currentSongId
+      }
+    })
+  },
   globalData: {
     audioCxt: null,
     statusBarHeight: wx.getSystemInfoSync().statusBarHeight,
     currentSongId: null,
-    currentSongList:null,
-    currentSongIndex:null,
+    _currentSongId: null,
+    currentSongList: null,
+    currentSongIndex: null,
     playingType: 0, //播放模式   0：循序播放（默认）1：单曲循环 2：随机播放
-    isChangeSongId:false,//是否是带着id跳转到play页面
+    isChangeSongId: false, //是否是带着id跳转到play页面
     songDetail: {
       authorName: '', //歌手
       musicName: '', //歌曲名
