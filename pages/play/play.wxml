@@ -48,6 +48,6 @@
                 </view>
             </view>
         </view>
-        <play-list-popup bind:handlePopup="handlePopup" bind:playingById="playingById" isShow="{{isShow}}"></play-list-popup>
+        <play-list-popup currentSongIndex="{{currentSongIndex}}" bind:handlePopup="handlePopup" bind:playingById="playingById" isShow="{{isShow}}"></play-list-popup>
     </view>
 </view>

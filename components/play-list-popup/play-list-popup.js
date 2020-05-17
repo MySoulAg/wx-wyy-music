@@ -6,7 +6,8 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    isShow: Boolean
+    isShow: Boolean,
+    currentSongIndex: Number
   },
 
   lifetimes: {
@@ -40,7 +41,8 @@ Component({
     /**点击列表 切换歌曲 */
     playingById(e) {
       this.triggerEvent("playingById", {
-        songId: e.currentTarget.dataset.songid
+        songId: e.currentTarget.dataset.songid,
+        index: e.currentTarget.dataset.index,
       })
     },
 

@@ -21,14 +21,18 @@ Page({
 
   /**点击歌曲列表 跳 播放 */
   goPlay(e) {
-    App.globalData.currentSongId = e.currentTarget.dataset.songid
+    
     App.globalData.currentSongList = this.data.songList
-    if (e.currentTarget.dataset.index != App.globalData.currentSongIndex) {
+    if (e.currentTarget.dataset.songid != App.globalData.currentSongId) {
+      App.globalData.currentSongId = e.currentTarget.dataset.songid
       App.globalData.currentSongIndex = e.currentTarget.dataset.index
       App.globalData.isChangeSongId = true
     } else {
       App.globalData.isChangeSongId = false
     }
+    this.setData({
+      currentIndex: e.currentTarget.dataset.index
+    })
     wx.navigateTo({
       url: '../play/play'
     })
@@ -73,7 +77,8 @@ Page({
   /**
    * 监听 picUrl 的变化
    */
-  watchBackPicUrl: function () {
+  watchBackPicUrl: function (juju) {
+    console.log(juju,33333333)
     this.setData({
       picUrl: App.globalData.songDetail.picUrl,
     })
@@ -82,7 +87,8 @@ Page({
   /**
    * 监听 currentSongId 的变化
    */
-  watchBackwatchSongId: function () {
+  watchBackwatchSongId: function (dthbgth) {
+    console.log(dthbgth,44444444)
     for (let i = 0, len = this.data.songList.length; i < len; i++) {
       if (this.data.songList[i].id == App.globalData.currentSongId) {
         this.setData({

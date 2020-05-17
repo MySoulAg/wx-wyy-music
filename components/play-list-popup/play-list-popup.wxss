@@ -39,10 +39,11 @@
   justify-content: center;
 }
 .warp .swiper-containter .swiper-item .swiper-item-box .ul {
-  padding: 0 30rpx;
+  /* padding: 0 30rpx 0 0; */
   height: calc(100% - 200rpx);
-  overflow-y: scroll;
-  overflow-x: hidden;
+  box-sizing: border-box;
+  /* overflow-y: scroll;
+  overflow-x: hidden; */
 }
 .warp .swiper-containter .swiper-item .swiper-item-box .ul .li {
   padding: 20rpx 0;
@@ -73,7 +74,7 @@
   margin-left: 6rpx;
 }
 .warp .swiper-containter .swiper-item .swiper-item-box .ul .li .icon {
-  padding: 4rpx 10rpx;
+  padding: 4rpx 30rpx 4rpx 10rpx;
 }
 .warp .swiper-containter .swiper-item .swiper-item-box .ul .li .activeInon {
   padding-left: 0;

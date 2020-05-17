@@ -10,33 +10,9 @@
                         </view>
                         <view class="ul">
                             <view class="li">
-                                <view class="left">
-                                    <view class="p">发热狗热狗</view>
-                                    <view class="span">-法国人人</view>
+                                <view class="num" style="width:80rpx;text-align:center;color:#999">
+                                    6
                                 </view>
-                                <view class="icon">
-                                    <icon type="clear" size="16"></icon>
-                                </view>
-                            </view>
-                            <view class="li">
-                                <view class="left">
-                                    <view class="p">发热狗热狗</view>
-                                    <view class="span">-法国人人</view>
-                                </view>
-                                <view class="icon">
-                                    <icon type="clear" size="16"></icon>
-                                </view>
-                            </view>
-                            <view class="li">
-                                <view class="left">
-                                    <view class="p">发热狗热狗</view>
-                                    <view class="span">-法国人人</view>
-                                </view>
-                                <view class="icon">
-                                    <icon type="clear" size="16"></icon>
-                                </view>
-                            </view>
-                            <view class="li">
                                 <view class="left">
                                     <view class="p">发热狗热狗</view>
                                     <view class="span">-法国人人</view>
@@ -53,14 +29,21 @@
                 <swiper-item class="swiper-item" item-id="">
                     <view class="swiper-item-box">
                         <view class="h5">
-                            播放当前
-                            <view class="span">({{currentSongList.length}})</view>
+                            当前播放
+                            <view class="span">({{currentSongList.length || 0}})</view>
                         </view>
-                        <view class="ul" wx:if="{{currentSongList.length>0}}">
-                            <view class="li" data-songId="{{item.id}}" bind:tap="playingById" wx:for="{{currentSongList}}" wx:key="id">
+                        <scroll-view scroll-y="true" class="ul" wx:if="{{currentSongList.length>0}}">
+                            <view class="li" data-songId="{{item.id}}" data-index="{{index}}" bind:tap="playingById" wx:for="{{currentSongList}}" wx:key="id">
+                                <view class="num" style="width:80rpx;text-align:center;color:#999;font-size:26rpx">
+                                    <!-- {{currentSongIndex}} -->
+                                    {{currentSongIndex != index?index + 1:''}}
+                                    <image wx:if="{{index ==currentSongIndex}}" style="width:26rpx;height:26rpx" src="../../assets/imgs/call3.gif"></image>
+                                </view>
                                 <view class="left">
-                                    <view class="p">{{item.name}}</view>
-                                    <view class="span">
+                                    <view style="{{index ==currentSongIndex?'color: #e74c3c':'' }}" class="p">
+                                        {{item.name}}
+                                    </view>
+                                    <view style="{{index ==currentSongIndex?'color: #e74c3c':'' }}" class="span">
                                         -{{item.ar?item.ar[0].name:item.artists[0].name}}
                                     </view>
                                 </view>
@@ -68,14 +51,12 @@
                                     <icon type="clear" size="16" color="#eee"></icon>
                                 </view>
                             </view>
-                        </view>
-                        <view wx:else class="noData">无历史播放，快去听听吧(つェ⊂)</view>
+                        </scroll-view>
+                        <view wx:else class="noData">无当前播放，快去听听吧(つェ⊂)</view>
                         <view class="button" bind:tap="closePopup">关闭</view>
                     </view>
                 </swiper-item>
             </swiper>
-          
-        
         </view>
     </van-popup>
 </view>

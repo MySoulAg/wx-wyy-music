@@ -16,8 +16,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    animation:true,//用于切换歌曲后，封面的重新开始动画
-    isShowLyric:false,//是否显示歌词
+    animation: true, //用于切换歌曲后，封面的重新开始动画
+    isShowLyric: false, //是否显示歌词
     isLoading: true, //背景图的占位图
     isShow: false, //是否显示列表弹出层
     playingType: 0, //播放模式
@@ -35,8 +35,9 @@ Page({
     nolyric: false, //是否无歌词
     lyricArr: [], //歌词
     lyricBoxArr: [], //装歌词的盒子,用来计算歌词的滚动高度
-    currentIndex: -1, //当前播放的歌词下表
-    scrollHeight: 0 //歌词滚动的高度
+    currentIndex: -1, //当前播放的歌词下标
+    scrollHeight: 0, //歌词滚动的高度
+    currentSongIndex: -1, //当前播放的歌曲下标
   },
 
   /**初始化监听 */
@@ -130,9 +131,9 @@ Page({
   },
 
   /**显示封面 或 歌词 */
-  target(){
+  target() {
     this.setData({
-      isShowLyric:!this.data.isShowLyric
+      isShowLyric: !this.data.isShowLyric
     })
   },
 
@@ -198,11 +199,16 @@ Page({
     this.setData({
       isShow: e.detail.isShow
     })
+
   },
 
   /**点击弹出层的列表 播放 */
   playingById(e) {
+    App.globalData.currentSongId = e.detail.songId
     this.playInit(e.detail.songId);
+    this.setData({
+      currentSongIndex: e.detail.index
+    })
   },
 
   /**点击播放/暂停 */
@@ -247,6 +253,9 @@ Page({
     });
     //随机出一个不包括正在播放列表的下标的随机数，作为下一个随机播放的下标
     let randomIndex = this.getRandom(0, App.globalData.currentSongList.length - 1, itemIndex)
+    this.setData({
+      currentSongIndex: randomIndex
+    })
     App.globalData.currentSongId = App.globalData.currentSongList[randomIndex].id
     this.playInit(App.globalData.currentSongId);
   },
@@ -274,8 +283,14 @@ Page({
     if (itemIndex == App.globalData.currentSongList.length - 1) {
       //列表中的最后一首
       App.globalData.currentSongId = App.globalData.currentSongList[0].id
+      this.setData({
+        currentSongIndex: 0
+      })
     } else {
       App.globalData.currentSongId = App.globalData.currentSongList[itemIndex + 1].id
+      this.setData({
+        currentSongIndex: itemIndex + 1
+      })
     }
     this.playInit(App.globalData.currentSongId);
   },
@@ -292,15 +307,21 @@ Page({
     if (itemIndex == 0) {
       //列表中的第一首
       App.globalData.currentSongId = App.globalData.currentSongList[App.globalData.currentSongList.length - 1].id
+      this.setData({
+        currentSongIndex: App.globalData.currentSongList.length - 1
+      })
     } else {
       App.globalData.currentSongId = App.globalData.currentSongList[itemIndex - 1].id
+      this.setData({
+        currentSongIndex: itemIndex - 1
+      })
     }
     this.playInit(App.globalData.currentSongId);
   },
 
   /**获取歌曲的url */
   getSongUrl(songId) {
-    return new Promise(resolve=>{
+    return new Promise(resolve => {
       request.getSongUrl(songId).then(res => {
         resolve()
         if (res.data[0].url) {
@@ -330,7 +351,7 @@ Page({
             this.randomSong();
           }
         }
-  
+
       })
     })
 
@@ -339,7 +360,7 @@ Page({
 
   /**获取音乐详情 */
   getSongDetail(songId) {
-    return new Promise(resolve=>{
+    return new Promise(resolve => {
       request.getSongDetail(songId).then(res => {
         resolve()
         console.log(res);
@@ -355,7 +376,7 @@ Page({
         App.globalData.songDetail.picUrl = res.songs[0].al.picUrl;
         App.globalData.songDetail.totleTime = parseInt(res.songs[0].dt / 1000);
       });
-    }) 
+    })
   },
 
   /**歌词滚动 */
@@ -376,9 +397,9 @@ Page({
 
   /**获取歌词 */
   getLyric(songId) {
-    return new Promise(resolve=>{
+    return new Promise(resolve => {
       request.getLyric(songId).then(res => {
-        this.getSongUrl(songId).then(()=>{
+        this.getSongUrl(songId).then(() => {
           resolve()
         });
         console.log(res);
@@ -389,7 +410,7 @@ Page({
           })
           App.globalData.nolyric = true
           App.globalData.lyricArr = []
-        }else {
+        } else {
           App.globalData.nolyric = false
           App.globalData.lyricArr = parseLyric(res.lrc.lyric)
           this.setData({
@@ -425,7 +446,7 @@ Page({
       scrollHeight: 0,
       lyricArr: [],
       isLoading: true,
-      animation:!this.data.animation
+      animation: !this.data.animation
     })
     App.globalData.playingState = false
     App.globalData.lyricArr = []
@@ -442,11 +463,28 @@ Page({
    */
   onLoad: function (options) {
     console.log('load')
+    // App.watchSongId(this.watchBackwatchSongId)
     this.setData({
       navTop: App.globalData.navTop,
       titleWidth: App.globalData.windowWidth - (App.globalData.menuButtonWidth) * 2 - 50
     })
   },
+
+  // /**
+  //  * 监听 currentSongId 的变化
+  //  */
+  // watchBackwatchSongId: function (currentSongId) {
+  //   console.log(currentSongId,1111111111)
+  //   for (let i = 0, len = App.globalData.currentSongList.length; i < len; i++) {
+  //     if (App.globalData.currentSongList[i].id == currentSongId) {
+  //       this.setData({
+  //         currentSongIndex: i
+  //       })
+  //       console.log(this.data.currentSongIndex)
+  //       return
+  //     }
+  //   }
+  // },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -463,6 +501,15 @@ Page({
     wx.setKeepScreenOn({
       keepScreenOn: true
     })
+    for (let i = 0, len = App.globalData.currentSongList.length; i < len; i++) {
+      if (App.globalData.currentSongList[i].id == App.globalData.currentSongId) {
+        this.setData({
+          currentSongIndex: i
+        })
+        console.log(this.data.currentSongIndex)
+        break
+      }
+    }
 
     this.listenInit();
     if (App.globalData.isChangeSongId) {
