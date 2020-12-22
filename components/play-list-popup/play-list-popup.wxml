@@ -6,16 +6,16 @@
                     <view class="swiper-item-box">
                         <view class="h5">
                             历史播放
-                            <view class="span">(25)</view>
+                            <view class="span">(1)</view>
                         </view>
                         <view class="ul">
                             <view class="li">
                                 <view class="num" style="width:80rpx;text-align:center;color:#999">
-                                    6
+                                    1
                                 </view>
                                 <view class="left">
-                                    <view class="p">发热狗热狗</view>
-                                    <view class="span">-法国人人</view>
+                                    <view class="p">TODO...</view>
+                                    <view class="span">-todo...</view>
                                 </view>
                                 <view class="icon">
                                     <icon type="clear" size="16"></icon>

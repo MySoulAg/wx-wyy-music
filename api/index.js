@@ -1,7 +1,7 @@
 import {
     request
 } from '../utils/http.js'
-const baseUrl = 'https://ly.piaoliangnanhai.xyz'
+const baseUrl = 'https://api.mtnhao.com'
 
 /**获取推荐歌单 */
 exports.getRecommendedList = () => {
